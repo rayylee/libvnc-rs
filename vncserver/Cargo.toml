@@ -7,6 +7,7 @@ keywords = ["vnc", "vncserver", "rfb"]
 license = "MIT"
 readme = "README.md"
 repository = "https://github.com/rayylee/libvnc-rs"
+description = "Rust bindings for the Libvncserver library"
 
 [lib]
 name = "vncserver"

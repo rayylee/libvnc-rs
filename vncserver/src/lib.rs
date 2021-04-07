@@ -13,18 +13,19 @@
 //! use vncserver::*;
 //! fn main() {
 //!     let server = rfb_get_screen(400, 300, 8, 3, 4);
-//!     rfb_attach_framebuffer(server, 400*300*4);
+//!     rfb_framebuffer_malloc(server, 400*300*4);
 //!     rfb_init_server(server);
-//!     rfb_run_event_loop(server);
+//!     rfb_run_event_loop(server, -1, 0);
 //! }
 //! ```
-
 
 use std;
 
 include!(concat!(std::env!("OUT_DIR"), "/rfb.rs"));
 
+
 pub type RfbScreenInfoPtr = rfbScreenInfoPtr;
+pub type RfbBool = rfbBool;
 
 pub fn rfb_get_screen(width: i32, height: i32, bits_per_sample: i32, samples_per_pixel: i32, bytes_per_pixel: i32) -> RfbScreenInfoPtr {
     let mut arg_len = 0 as i32;
@@ -36,7 +37,7 @@ pub fn rfb_get_screen(width: i32, height: i32, bits_per_sample: i32, samples_per
     }
 }
 
-pub fn rfb_attach_framebuffer(ptr: RfbScreenInfoPtr, size: u64) {
+pub fn rfb_framebuffer_malloc(ptr: RfbScreenInfoPtr, size: u64) {
     unsafe {
         (*ptr).frameBuffer = malloc(size as ::std::os::raw::c_ulong) as *mut i8;
     }
@@ -48,8 +49,8 @@ pub fn rfb_init_server(ptr: RfbScreenInfoPtr) {
     }
 }
 
-pub fn rfb_run_event_loop(ptr: RfbScreenInfoPtr) {
+pub fn rfb_run_event_loop(ptr: RfbScreenInfoPtr, usec: i64, run_in_background: RfbBool) {
     unsafe {
-        rfbRunEventLoop(ptr, -1, 0);
+        rfbRunEventLoop(ptr, usec as ::std::os::raw::c_long, run_in_background);
     };
 }

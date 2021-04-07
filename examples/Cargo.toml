@@ -15,3 +15,7 @@ path = "../vncserver"
 [[example]]
 name = "sample"
 path = "sample/main.rs"
+
+[[example]]
+name = "sample16"
+path = "sample16/main.rs"

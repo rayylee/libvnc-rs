@@ -20,6 +20,7 @@
 //! ```
 
 use std;
+use core::slice;
 
 include!(concat!(std::env!("OUT_DIR"), "/rfb.rs"));
 
@@ -37,10 +38,20 @@ pub fn rfb_get_screen(width: i32, height: i32, bits_per_sample: i32, samples_per
     }
 }
 
-pub fn rfb_framebuffer_malloc(ptr: RfbScreenInfoPtr, size: u64) {
+pub fn rfb_framebuffer_malloc(ptr: RfbScreenInfoPtr, fb_size: u64) {
     unsafe {
-        (*ptr).frameBuffer = malloc(size as ::std::os::raw::c_ulong) as *mut i8;
+        (*ptr).frameBuffer = malloc(fb_size as ::std::os::raw::c_ulong) as *mut i8;
     }
+}
+
+pub fn rfb_framebuffer_set_rgb16(ptr: RfbScreenInfoPtr, x: i32, y: i32, rgb16: u16) {
+	unsafe {
+        let addr = (*ptr).frameBuffer as *mut u16;
+        let fb_size = (*ptr).height * (*ptr).width * (*ptr).bitsPerPixel;
+        let slice: &mut [u16] = slice::from_raw_parts_mut(addr, fb_size as usize);
+        let pos = (*ptr).width*y + x;
+        slice[pos as usize] = rgb16;
+	}
 }
 
 pub fn rfb_init_server(ptr: RfbScreenInfoPtr) {

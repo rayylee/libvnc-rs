@@ -38,9 +38,21 @@ pub fn rfb_get_screen(width: i32, height: i32, bits_per_sample: i32, samples_per
     }
 }
 
+pub fn rfb_screen_cleanup(ptr: RfbScreenInfoPtr) {
+    unsafe {
+        rfbScreenCleanup(ptr);
+    }
+}
+
 pub fn rfb_framebuffer_malloc(ptr: RfbScreenInfoPtr, fb_size: u64) {
     unsafe {
         (*ptr).frameBuffer = malloc(fb_size as ::std::os::raw::c_ulong) as *mut i8;
+    }
+}
+
+pub fn rfb_framebuffer_free(ptr: RfbScreenInfoPtr) {
+    unsafe {
+        free((*ptr).frameBuffer as *mut ::std::os::raw::c_void);
     }
 }
 

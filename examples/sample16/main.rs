@@ -26,5 +26,8 @@ fn main() {
 
     rfb_init_server(server);
     rfb_run_event_loop(server, -1, 0);
+
+    rfb_framebuffer_free(server);
+    rfb_screen_cleanup(server);
 }
 

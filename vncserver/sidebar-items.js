@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["rfb_framebuffer_free",""],["rfb_framebuffer_malloc",""],["rfb_framebuffer_set_rgb16",""],["rfb_get_screen",""],["rfb_init_server",""],["rfb_run_event_loop",""],["rfb_screen_cleanup",""]],"type":[["RfbBool",""],["RfbScreenInfoPtr","A raw pointer to Rfb Screen Information."]]});

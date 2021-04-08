@@ -1,0 +1,4 @@
+var searchIndex = JSON.parse('{\
+"vncserver":{"doc":"Libvncserver bindings","t":[6,6,5,5,5,5,5,5,5],"n":["RfbScreenInfoPtr","RfbBool","rfb_get_screen","rfb_screen_cleanup","rfb_framebuffer_malloc","rfb_framebuffer_free","rfb_framebuffer_set_rgb16","rfb_init_server","rfb_run_event_loop"],"q":["vncserver","","","","","","","",""],"d":["A raw pointer to Rfb Screen Information.","","","","","","","",""],"i":[0,0,0,0,0,0,0,0,0],"f":[null,null,[[["i32",15]],["rfbscreeninfoptr",6]],[[["rfbscreeninfoptr",6]]],[[["rfbscreeninfoptr",6],["u64",15]]],[[["rfbscreeninfoptr",6]]],[[["rfbscreeninfoptr",6],["u16",15],["i32",15]]],[[["rfbscreeninfoptr",6]]],[[["i64",15],["rfbscreeninfoptr",6],["rfbbool",6]]]],"p":[]}\
+}');
+initSearch(searchIndex);

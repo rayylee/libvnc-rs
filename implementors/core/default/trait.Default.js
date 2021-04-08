@@ -1,0 +1,3 @@
+(function() {var implementors = {};
+implementors["vncserver"] = [{"text":"impl&lt;T:&nbsp;<a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/core/default/trait.Default.html\" title=\"trait core::default::Default\">Default</a>&gt; <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/core/default/trait.Default.html\" title=\"trait core::default::Default\">Default</a> for <a class=\"struct\" href=\"vncserver/struct.__IncompleteArrayField.html\" title=\"struct vncserver::__IncompleteArrayField\">__IncompleteArrayField</a>&lt;T&gt;","synthetic":false,"types":["vncserver::__IncompleteArrayField"]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

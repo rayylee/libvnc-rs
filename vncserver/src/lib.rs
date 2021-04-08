@@ -1,6 +1,38 @@
+//! # Libvncserver bindings
+//!
+//! This library contains safe Rust bindings for [Libvncserver](https://github.com/LibVNC/libvncserver)
+//!
+//! # Sample
+//!
+//! ```no_run
+//! use vncserver::*;
+//! fn main() {
+//!     let server = rfb_get_screen(400, 300, 8, 3, 4);
+//!     rfb_framebuffer_malloc(server, 400*300*4);
+//!     rfb_init_server(server);
+//!     rfb_run_event_loop(server, -1, 0);
+//! }
+//! ```
+
 mod rfb;
 
+/// A raw pointer to Rfb Screen Information.
+///
+/// ```
+/// struct _rfbScreenInfo {
+///     scaledScreenNext: *mut _rfbScreenInfo,
+///     scaledScreenRefCount: ::std::os::raw::c_int,
+///     width: ::std::os::raw::c_int,
+///     paddedWidthInBytes: ::std::os::raw::c_int,
+///     height: ::std::os::raw::c_int,
+///     depth: ::std::os::raw::c_int,
+///     bitsPerPixel: ::std::os::raw::c_int,
+///     sizeInBytes: ::std::os::raw::c_int,
+///     ...
+/// }
+/// ```
 pub type RfbScreenInfoPtr = rfb::rfbScreenInfoPtr;
+
 pub type RfbBool = rfb::rfbBool;
 
 pub fn rfb_get_screen(width: i32, height: i32, bits_per_sample: i32, samples_per_pixel: i32, bytes_per_pixel: i32) -> RfbScreenInfoPtr {

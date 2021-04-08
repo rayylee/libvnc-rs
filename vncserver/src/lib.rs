@@ -59,10 +59,12 @@ pub fn rfb_framebuffer_free(ptr: RfbScreenInfoPtr) {
 pub fn rfb_framebuffer_set_rgb16(ptr: RfbScreenInfoPtr, x: i32, y: i32, rgb16: u16) {
 	unsafe {
         let addr = (*ptr).frameBuffer as *mut u16;
-        let fb_size = (*ptr).height * (*ptr).width * (*ptr).bitsPerPixel;
+        let fb_size = (*ptr).height * (*ptr).width * (*ptr).bitsPerPixel / 2;
         let slice: &mut [u16] = slice::from_raw_parts_mut(addr, fb_size as usize);
         let pos = (*ptr).width*y + x;
-        slice[pos as usize] = rgb16;
+        if pos < fb_size {
+            slice[pos as usize] = rgb16;
+        }
 	}
 }
 

@@ -50,6 +50,34 @@ pub fn rfb_framebuffer_set_rgb16(ptr: rfbScreenInfoPtr, x: i32, y: i32, rgb16: u
 	}
 }
 
+pub fn rfb_process_events(ptr: rfbScreenInfoPtr, usec: i64) -> rfbBool {
+    unsafe {
+        rfbProcessEvents(ptr, usec as ::std::os::raw::c_long)
+    }
+}
+
+pub fn rfb_kbd_add_event(ptr: rfbScreenInfoPtr, cb: rfbKbdAddEventProcPtr) {
+    unsafe {
+        (*ptr).kbdAddEvent = cb;
+    }
+}
+
+pub fn rfb_mark_rect_as_modified(ptr: rfbScreenInfoPtr, x1: i32, y1: i32, x2: i32, y2: i32) {
+	unsafe {
+        rfbMarkRectAsModified(ptr,
+            x1 as ::std::os::raw::c_int,
+            y1 as ::std::os::raw::c_int,
+            x2 as ::std::os::raw::c_int,
+            y2 as ::std::os::raw::c_int);
+	}
+}
+
+pub fn rfb_is_active(ptr: rfbScreenInfoPtr) -> rfbBool {
+    unsafe {
+        rfbIsActive(ptr)
+    }
+}
+
 pub fn rfb_init_server(ptr: rfbScreenInfoPtr) {
     unsafe {
         rfbInitServerWithPthreadsAndZRLE(ptr);

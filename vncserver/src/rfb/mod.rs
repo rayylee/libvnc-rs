@@ -3,20 +3,32 @@
 #![allow(non_snake_case)]
 #![allow(non_upper_case_globals)]
 #![allow(non_camel_case_types)]
+#![allow(clippy::upper_case_acronyms)]
 
-use std;
 use core::slice;
 
 include!(concat!(std::env!("OUT_DIR"), "/rfb.rs"));
 
-
-pub fn rfb_get_screen(width: i32, height: i32, bits_per_sample: i32, samples_per_pixel: i32, bytes_per_pixel: i32) -> rfbScreenInfoPtr {
-    let mut arg_len = 0 as i32;
+pub fn rfb_get_screen(
+    width: i32,
+    height: i32,
+    bits_per_sample: i32,
+    samples_per_pixel: i32,
+    bytes_per_pixel: i32,
+) -> rfbScreenInfoPtr {
+    let mut arg_len = 0;
     let mut arg_ptr: *mut i8 = std::ptr::null_mut();
 
     unsafe {
-        let server = rfbGetScreen(&mut arg_len, &mut arg_ptr, width, height, bits_per_sample, samples_per_pixel, bytes_per_pixel);
-        server
+        rfbGetScreen(
+            &mut arg_len,
+            &mut arg_ptr,
+            width,
+            height,
+            bits_per_sample,
+            samples_per_pixel,
+            bytes_per_pixel,
+        )
     }
 }
 
@@ -39,21 +51,19 @@ pub fn rfb_framebuffer_free(ptr: rfbScreenInfoPtr) {
 }
 
 pub fn rfb_framebuffer_set_rgb16(ptr: rfbScreenInfoPtr, x: i32, y: i32, rgb16: u16) {
-	unsafe {
+    unsafe {
         let addr = (*ptr).frameBuffer as *mut u16;
         let fb_size = (*ptr).height * (*ptr).width * (*ptr).bitsPerPixel / 2;
         let slice: &mut [u16] = slice::from_raw_parts_mut(addr, fb_size as usize);
-        let pos = (*ptr).width*y + x;
+        let pos = (*ptr).width * y + x;
         if pos < fb_size {
             slice[pos as usize] = rgb16;
         }
-	}
+    }
 }
 
 pub fn rfb_process_events(ptr: rfbScreenInfoPtr, usec: i64) -> rfbBool {
-    unsafe {
-        rfbProcessEvents(ptr, usec as ::std::os::raw::c_long)
-    }
+    unsafe { rfbProcessEvents(ptr, usec as ::std::os::raw::c_long) }
 }
 
 pub fn rfb_kbd_add_event(ptr: rfbScreenInfoPtr, cb: rfbKbdAddEventProcPtr) {
@@ -63,19 +73,19 @@ pub fn rfb_kbd_add_event(ptr: rfbScreenInfoPtr, cb: rfbKbdAddEventProcPtr) {
 }
 
 pub fn rfb_mark_rect_as_modified(ptr: rfbScreenInfoPtr, x1: i32, y1: i32, x2: i32, y2: i32) {
-	unsafe {
-        rfbMarkRectAsModified(ptr,
+    unsafe {
+        rfbMarkRectAsModified(
+            ptr,
             x1 as ::std::os::raw::c_int,
             y1 as ::std::os::raw::c_int,
             x2 as ::std::os::raw::c_int,
-            y2 as ::std::os::raw::c_int);
-	}
+            y2 as ::std::os::raw::c_int,
+        );
+    }
 }
 
 pub fn rfb_is_active(ptr: rfbScreenInfoPtr) -> rfbBool {
-    unsafe {
-        rfbIsActive(ptr)
-    }
+    unsafe { rfbIsActive(ptr) }
 }
 
 pub fn rfb_init_server(ptr: rfbScreenInfoPtr) {

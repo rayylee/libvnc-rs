@@ -6,12 +6,11 @@
 //!
 //! ```no_run
 //! use vncserver::*;
-//! fn main() {
-//!     let server = rfb_get_screen(400, 300, 8, 3, 4);
-//!     rfb_framebuffer_malloc(server, 400*300*4);
-//!     rfb_init_server(server);
-//!     rfb_run_event_loop(server, -1, 0);
-//! }
+//!
+//! let server = rfb_get_screen(400, 300, 8, 3, 4);
+//! rfb_framebuffer_malloc(server, 400 * 300 * 4);
+//! rfb_init_server(server);
+//! rfb_run_event_loop(server, -1, 0);
 //! ```
 
 mod rfb;
@@ -31,7 +30,7 @@ pub const RFB_TRUE: i8 = 1;
 ///     depth: ::std::os::raw::c_int,
 ///     bitsPerPixel: ::std::os::raw::c_int,
 ///     sizeInBytes: ::std::os::raw::c_int,
-///     ...
+///     // ...
 /// }
 /// ```
 pub type RfbScreenInfoPtr = rfb::rfbScreenInfoPtr;
@@ -40,9 +39,20 @@ pub type RfbBool = rfb::rfbBool;
 pub type RfbKeySym = rfb::rfbKeySym;
 pub type RfbClientRec = rfb::rfbClientRec;
 
-
-pub fn rfb_get_screen(width: i32, height: i32, bits_per_sample: i32, samples_per_pixel: i32, bytes_per_pixel: i32) -> RfbScreenInfoPtr {
-    rfb::rfb_get_screen(width, height, bits_per_sample, samples_per_pixel, bytes_per_pixel)
+pub fn rfb_get_screen(
+    width: i32,
+    height: i32,
+    bits_per_sample: i32,
+    samples_per_pixel: i32,
+    bytes_per_pixel: i32,
+) -> RfbScreenInfoPtr {
+    rfb::rfb_get_screen(
+        width,
+        height,
+        bits_per_sample,
+        samples_per_pixel,
+        bytes_per_pixel,
+    )
 }
 
 pub fn rfb_screen_cleanup(ptr: RfbScreenInfoPtr) {

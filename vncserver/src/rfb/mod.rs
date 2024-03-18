@@ -17,7 +17,7 @@ pub fn rfb_get_screen(
     bytes_per_pixel: i32,
 ) -> rfbScreenInfoPtr {
     let mut arg_len = 0;
-    let mut arg_ptr: *mut i8 = std::ptr::null_mut();
+    let mut arg_ptr: *mut ::std::os::raw::c_char = std::ptr::null_mut();
 
     unsafe {
         rfbGetScreen(
@@ -40,7 +40,8 @@ pub fn rfb_screen_cleanup(ptr: rfbScreenInfoPtr) {
 
 pub fn rfb_framebuffer_malloc(ptr: rfbScreenInfoPtr, fb_size: u64) {
     unsafe {
-        (*ptr).frameBuffer = malloc(fb_size as ::std::os::raw::c_ulong) as *mut i8;
+        (*ptr).frameBuffer =
+            malloc(fb_size as ::std::os::raw::c_ulong) as *mut ::std::os::raw::c_char;
     }
 }
 
